@@ -1,8 +1,13 @@
-import { createLoading } from '@/components/Loading';
+import { createLoading, type LoadingInstance } from '../components/Loading';
 import type { Directive, App } from 'vue';
+
+type LoadingElement = HTMLElement & {
+    instance?: LoadingInstance;
+};
 
 const loadingDirective: Directive = {
     mounted(el, binding) {
+        const loadingEl = el as LoadingElement;
         const tip = el.getAttribute('loading-tip');
         const background = el.getAttribute('loading-background');
         const size = el.getAttribute('loading-size');
@@ -17,10 +22,11 @@ const loadingDirective: Directive = {
             },
             fullscreen ? document.body : el,
         );
-        el.instance = instance;
+        loadingEl.instance = instance;
     },
     updated(el, binding) {
-        const instance = el.instance;
+        const loadingEl = el as LoadingElement;
+        const instance = loadingEl.instance;
         if (!instance) return;
         instance.setTip(el.getAttribute('loading-tip'));
         if (binding.oldValue !== binding.value) {
@@ -28,7 +34,8 @@ const loadingDirective: Directive = {
         }
     },
     unmounted(el) {
-        el?.instance?.close();
+        const loadingEl = el as LoadingElement;
+        loadingEl.instance?.close();
     },
 };
 
