@@ -29,7 +29,7 @@ describe('useMilesEngine', () => {
     expect(engine.ledger.value[0].miles).toBe(0);
   });
 
-  it('3. undoLast() 后 ledger 恢复正确', () => {
+  it('3. undoLast() restores ledger correctly', () => {
     engine.addTransaction({ amount: 100, merchantType: 'pharmacy', paymentMethod: 'mada' });
     engine.addTransaction({ amount: 200, merchantType: 'entertainment', paymentMethod: 'visa' });
     
@@ -41,7 +41,7 @@ describe('useMilesEngine', () => {
     expect(engine.canRedo.value).toBe(true);
   });
 
-  it('4. total net profit 汇总正确', () => {
+  it('4. total net profit correctly summarized', () => {
     engine.addTransaction({ amount: 50, merchantType: 'restaurant', paymentMethod: 'visa' });
     engine.addTransaction({ amount: 100, merchantType: 'supermarket', paymentMethod: 'mada' });
 
@@ -59,13 +59,13 @@ describe('useMilesEngine', () => {
     expect(engine.netProfit.value).toBe(expected);
   });
 
-  it('5. >= 500 SAR 时 miles 乘 1.5', () => {
+  it('5. >= 500 SAR multiplies miles by 1.5', () => {
     engine.addTransaction({ amount: 500, merchantType: 'supermarket', paymentMethod: 'cash' });
     // base = 500 * 1 = 500, * 1.5 = 750
     expect(engine.ledger.value[0].miles).toBe(750);
   });
 
-  it('6. mada 额外收入正确', () => {
+  it('6. mada additional revenue calculated correctly', () => {
     engine.addTransaction({ amount: 100, merchantType: 'pharmacy', paymentMethod: 'mada' });
     
     const entry = engine.ledger.value[0];
@@ -74,7 +74,7 @@ describe('useMilesEngine', () => {
     expect(entry.madaRevenue).toBe(Math.round(madaRev * 100) / 100);
   });
 
-  it('7. 亏损交易 isLoss 和 lossReason 正确', () => {
+  it('7. isLoss and lossReason set correctly for loss transactions', () => {
     engine.addTransaction({ amount: 1000, merchantType: 'restaurant', paymentMethod: 'visa' });
     
     const entry = engine.ledger.value[0];
@@ -82,7 +82,7 @@ describe('useMilesEngine', () => {
     expect(entry.lossReason).toBe("bonus_miles_loss");
   });
 
-  it('8. redoLast() 正确恢复', () => {
+  it('8. redoLast() restores transaction correctly', () => {
     engine.addTransaction({ amount: 100, merchantType: 'restaurant', paymentMethod: 'visa' });
     engine.undoLast();
     expect(engine.ledger.value).toHaveLength(0);
@@ -92,7 +92,7 @@ describe('useMilesEngine', () => {
     expect(engine.ledger.value[0].amount).toBe(100);
   });
 
-  it('9. 新增交易后清空 redo 栈', () => {
+  it('9. new transaction clears redo stack', () => {
     engine.addTransaction({ amount: 100, merchantType: 'restaurant', paymentMethod: 'visa' });
     engine.undoLast();
     expect(engine.canRedo.value).toBe(true);
