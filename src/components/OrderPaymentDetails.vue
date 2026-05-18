@@ -165,14 +165,25 @@ const amountIssues = computed(() => {
 }
 
 .success-panel {
+  position: relative;
+  overflow: hidden;
   display: grid;
   grid-template-columns: 64px 1fr;
   gap: 14px;
   align-items: center;
-  padding: 18px;
+  padding: 24px;
   color: #fff;
-  border-radius: 24px;
-  background: var(--blue);
+  border-radius: 26px;
+  background: linear-gradient(135deg, var(--blue) 0%, #002868 100%);
+  box-shadow: 0 12px 36px rgba(0, 60, 161, 0.25);
+}
+
+.success-panel::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at top left, rgba(255,255,255,0.15) 0%, transparent 60%);
+  pointer-events: none;
 }
 
 .rtl .success-panel {
@@ -210,7 +221,9 @@ const amountIssues = computed(() => {
 
 .success-panel strong {
   display: block;
+  font-family: 'Outfit', sans-serif;
   font-size: clamp(1.8rem, 9vw, 2.75rem);
+  font-weight: 800;
   line-height: 1;
 }
 
@@ -228,8 +241,11 @@ const amountIssues = computed(() => {
 .product-strip,
 .summary-card,
 .reward-panel {
-  border: 1px solid var(--line);
-  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 25, 79, 0.04);
 }
 
 .product-strip {
@@ -265,7 +281,9 @@ const amountIssues = computed(() => {
 
 .product-copy h2 {
   margin: 0;
-  font-size: 1rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
   line-height: 1.2;
 }
 
@@ -280,7 +298,9 @@ const amountIssues = computed(() => {
 .product-strip > strong {
   align-self: start;
   color: var(--blue);
-  font-size: 0.92rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 800;
   white-space: nowrap;
 }
 
@@ -371,13 +391,15 @@ const amountIssues = computed(() => {
 
 .summary-heading h2 {
   margin: 0;
-  font-size: 1.05rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.15rem;
   font-weight: 800;
 }
 
 .summary-heading strong {
   color: var(--ink);
-  font-size: 1.25rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.35rem;
   font-weight: 800;
   white-space: nowrap;
 }
@@ -405,6 +427,8 @@ const amountIssues = computed(() => {
 
 .amount-list dd {
   margin: 0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
   font-weight: 800;
 }
 
@@ -482,7 +506,9 @@ const amountIssues = computed(() => {
 .reward-panel strong {
   display: block;
   color: var(--blue);
-  font-size: 1.8rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.85rem;
+  font-weight: 800;
   line-height: 1;
 }
 

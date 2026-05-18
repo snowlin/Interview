@@ -1,127 +1,48 @@
-# Order Payment Flow
+# AladdinMiles Engine
 
-This project implements a mobile-first Vue 3 + TypeScript order payment flow with English and Arabic RTL support.
+AladdinMiles Engine is a Vue 3 + TypeScript application designed to accurately calculate transaction miles, monitor revenue and costs, and display real-time profit analytics for loyalty program merchants. 
 
-## Run Locally
+The dashboard is built with a **"Refined Fintech Luxury"** aesthetic, supporting seamless internationalization (English & Arabic RTL) and offering a robust, reactive Undo/Redo transaction history.
+
+## 🚀 Key Features
+
+### 1. Robust Core Engine (`useMilesEngine`)
+- **Strict Business Rules**: Calculates miles strictly based on merchant types (Restaurant/Entertainment: 3 miles/SAR | Supermarket/Pharmacy: 1 mile/SAR).
+- **High-Value Multipliers**: Automatically applies a `1.5x` multiplier for individual transactions over 500 SAR.
+- **Micro-transaction Filtering**: Transactions under 10 SAR automatically yield 0 miles.
+- **Profit & Loss Detection**: Granular calculation of Merchant Commission (15%), Customer Commission (15%), Mada Revenue bonuses (1%), and Miles Costs. It precisely detects and tags when transactions cause a deficit (e.g., `bonus_miles_loss`).
+
+### 2. Reactive History Stack (Undo/Redo)
+- Includes a fully tested, immutable history state manager.
+- Users can securely undo and redo transactions. All derived metrics (Total Miles, Total Revenue, Net Profit, etc.) automatically recalculate with absolute precision.
+
+### 3. "Refined Fintech Luxury" UI Design
+- **Hero Metrics & Glassmorphism**: High-impact metrics use frosted glass cards and deep gradients to give a premium banking feel.
+- **Bank Statement Ledger**: Transactions are displayed with elegant typography, utilizing distinct icons and sophisticated inline alerts for revenue deficits.
+- **Fluid Micro-interactions**: Buttons and inputs feature sleek bottom-borders, hover spring-physics, and smooth transitions.
+
+### 4. Flawless i18n & RTL Support
+- Native toggle between English and Arabic (العربية).
+- Deep integration ensures the entire App Shell, routing tabs, and the Miles Dashboard remain tightly synced.
+- Includes granular CSS fixes to ensure LTR constraints on specific UI elements (like minus signs on negative numbers and directional Undo/Redo arrows) remain intact while the rest of the application seamlessly mirrors for RTL reading.
+
+## 🛠 Tech Stack
+- **Vue 3** (Composition API)
+- **TypeScript**
+- **Vitest** (100% Test Coverage on Core Engine Logic)
+
+## 📦 Getting Started
 
 ```bash
-yarn install
-yarn dev
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Run unit tests
+npm run test
 ```
 
-Build check:
-
-```bash
-yarn build
-```
-
-## Interaction Flow
-
-1. User lands on the payment review page.
-2. User can switch language between English and Arabic.
-3. Arabic mode switches the page to RTL layout.
-4. The payment page shows the order summary:
-   - Product image and product name
-   - Sub Total
-   - VAT (15%)
-   - Surcharge as a separate visible line
-   - Total
-   - Miles Rewarded
-5. User taps `Pay now`.
-6. The UI enters a simulated processing state.
-7. The payment result is randomly simulated:
-   - Success: show a green success message, then navigate to the order details page.
-   - Failure: show a red failure message and keep the user on the payment page for retry.
-8. After successful payment, the order details page shows:
-   - Payment successful status
-   - Product information
-   - Payment milestones
-   - Cost breakdown
-   - Miles Rewarded
-
-## Page Responsibilities
-
-### `PaymentPage.vue`
-
-This is the pre-payment review page. It focuses on the information the user needs before confirming payment:
-
-- Product summary
-- Cost breakdown
-- Surcharge as a standalone line
-- Miles that will be rewarded
-- Payment safety note
-- Simulated `Pay now` interaction
-
-It does not show card form details because they are outside the strict order summary requirements.
-
-### `OrderPaymentDetails.vue`
-
-This is the post-payment order details page. It displays the completed payment state:
-
-- Payment successful status
-- Order milestone timeline
-- Product summary
-- Full amount calculation
-- Miles rewarded
-- Amount validation warning when totals do not match
-
-## Amount Validation
-
-`OrderPaymentDetails.vue` accepts these key props:
-
-```vue
-<OrderPaymentDetails
-  :subTotal="199.99"
-  :surcharge="8.08"
-  :expectedTotal="239.28"
-  currency="SAR"
-  :tolerance="0.01"
-/>
-```
-
-Validation behavior:
-
-- `currency` defaults to `SAR`.
-- `expectedTotal` is required.
-- `tolerance` defaults to `0.005`.
-- If any amount is invalid or the calculated total differs from `expectedTotal` beyond `tolerance`, the page shows an explicit warning.
-
-## Internationalization
-
-Shared copy lives in:
-
-```text
-src/util/copy.ts
-```
-
-Shared order data and amount utilities live in:
-
-```text
-src/util/order.ts
-```
-
-Arabic support includes:
-
-- `dir="rtl"` on the app shell
-- Arabic copy
-- RTL layout adjustments
-- Arabic-friendly font stack
-
-## Visual Direction
-
-The design uses a clean modern mobile style with the required brand colors:
-
-- Deep red: `#ba0030`
-- Deep blue: `#003ca1`
-
-Red is used for:
-
-- Primary brand emphasis
-- Payment failure
-- Surcharge text emphasis
-
-Blue is used for:
-
-- Primary payment actions
-- Secure payment messaging
-- Reward and progress emphasis
+## 🧪 Testing
+The core engine has 100% test coverage for its calculations and history stack management. The test suite verifies critical edge cases such as rounding precision, undo/redo state preservation, and loss-reason detection. Execute `npm run test` to view the 9 core test cases.

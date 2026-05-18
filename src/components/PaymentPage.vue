@@ -116,14 +116,25 @@ function simulatePayment() {
 }
 
 .pay-hero {
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: space-between;
   gap: 16px;
   align-items: end;
-  padding: 20px;
+  padding: 24px;
   border-radius: 26px;
   color: #fff;
-  background: var(--red);
+  background: linear-gradient(135deg, var(--red) 0%, #8a0024 100%);
+  box-shadow: 0 12px 36px rgba(186, 0, 48, 0.25);
+}
+
+.pay-hero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at top right, rgba(255,255,255,0.15) 0%, transparent 60%);
+  pointer-events: none;
 }
 
 .pay-hero p {
@@ -137,8 +148,10 @@ function simulatePayment() {
 
 .pay-hero h2 {
   margin: 0;
-  font-size: 1.55rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.6rem;
   line-height: 1.05;
+  font-weight: 800;
 }
 
 .rtl .pay-hero h2 {
@@ -146,16 +159,22 @@ function simulatePayment() {
 }
 
 .pay-hero strong {
-  font-size: 1.45rem;
+  position: relative;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.55rem;
+  font-weight: 800;
   white-space: nowrap;
 }
 
 .mini-product,
 .pay-breakdown,
 .miles-panel {
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 24px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 25, 79, 0.04);
 }
 
 .miles-panel p {
@@ -178,7 +197,8 @@ function simulatePayment() {
 .mini-product img {
   width: 58px;
   border-radius: 16px;
-  background: var(--soft-blue);
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .mini-product span {
@@ -208,15 +228,17 @@ function simulatePayment() {
 
 .pay-breakdown strong {
   color: var(--ink);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
 }
 
 .pay-breakdown .surcharge-line {
-  padding: 11px;
-  border: 1px solid rgba(0, 60, 161, 0.16);
+  padding: 11px 14px;
+  border: 1px solid rgba(186, 0, 48, 0.15);
   border-radius: 16px;
   color: var(--red);
-  background: #f8fafc;
-  font-weight: 900;
+  background: rgba(186, 0, 48, 0.04);
+  font-weight: 800;
 }
 
 .pay-breakdown .surcharge-line strong {
@@ -231,8 +253,13 @@ function simulatePayment() {
 .total-line span,
 .total-line strong {
   color: var(--ink);
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 800;
+}
+
+.total-line strong {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
 }
 
 .pay-breakdown p {
@@ -257,7 +284,9 @@ function simulatePayment() {
 .miles-panel strong {
   display: block;
   color: var(--blue);
-  font-size: 1.75rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.85rem;
+  font-weight: 800;
   line-height: 1;
 }
 
@@ -298,11 +327,22 @@ function simulatePayment() {
   width: 100%;
   border: 0;
   border-radius: 20px;
-  padding: 17px 18px;
+  padding: 18px 22px;
   color: #fff;
   background: var(--blue);
-  box-shadow: 0 18px 36px rgba(0, 60, 161, 0.24);
+  box-shadow: 0 16px 32px rgba(0, 60, 161, 0.28);
   cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+
+.pay-button:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 20px 40px rgba(0, 60, 161, 0.35);
+}
+
+.pay-button:active:not(:disabled) {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 8px 16px rgba(0, 60, 161, 0.2);
 }
 
 .pay-button:disabled {
@@ -312,8 +352,9 @@ function simulatePayment() {
 
 .pay-button span,
 .pay-button strong {
-  font-size: 1rem;
-  font-weight: 900;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
 }
 
 .payment-notes {
